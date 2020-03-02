@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PbxManagement", "PbxManagement\PbxManagement.csproj", "{758DF58E-CBA1-4432-ADF7-827C6C95D699}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PbxManagement.UI", "PbxManagement\PbxManagement.UI.csproj", "{758DF58E-CBA1-4432-ADF7-827C6C95D699}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PbxManagement.DAL", "PbxManagement.DAL\PbxManagement.DAL.csproj", "{DCD6F927-79C8-4DF8-8ECD-E7DD1654093D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PbxManagement.BLL", "PbxManagement.BLL\PbxManagement.BLL.csproj", "{28F3F956-BA8B-4435-9ADA-A5418746B7F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{758DF58E-CBA1-4432-ADF7-827C6C95D699}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{758DF58E-CBA1-4432-ADF7-827C6C95D699}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{758DF58E-CBA1-4432-ADF7-827C6C95D699}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCD6F927-79C8-4DF8-8ECD-E7DD1654093D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCD6F927-79C8-4DF8-8ECD-E7DD1654093D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCD6F927-79C8-4DF8-8ECD-E7DD1654093D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCD6F927-79C8-4DF8-8ECD-E7DD1654093D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28F3F956-BA8B-4435-9ADA-A5418746B7F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F3F956-BA8B-4435-9ADA-A5418746B7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F3F956-BA8B-4435-9ADA-A5418746B7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F3F956-BA8B-4435-9ADA-A5418746B7F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
