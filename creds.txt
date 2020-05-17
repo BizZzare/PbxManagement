@@ -1,0 +1,14 @@
+Admin account
+------------------
+username: root
+password: root
+
+Manager account
+------------------
+username: manager
+password: manager
+
+Accountant account
+------------------
+username: accountant
+password: accountant

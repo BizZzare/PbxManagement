@@ -1,0 +1,506 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PbxManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderId" Type="int" Nullable="false" />
+          <Property Name="ReceiverPhoneNumber" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Status" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubscriberId" Type="int" Nullable="false" />
+          <Property Name="AccountNumber" Type="nchar" MaxLength="16" />
+          <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+          <Property Name="Sum" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhoneCalls">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CallerId" Type="int" Nullable="false" />
+          <Property Name="ReceiverPhoneNumber" Type="nchar" MaxLength="20" />
+          <Property Name="Start" Type="datetime" Nullable="false" />
+          <Property Name="End" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subscribers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Balance" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubscriberToTariff">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubscriberId" Type="int" Nullable="false" />
+          <Property Name="TariffId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TariffCharges">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubscriberId" Type="int" Nullable="false" />
+          <Property Name="TariffId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Sum" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tariffs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Period" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Messages_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="SubscriberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhoneCalls_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="PhoneCalls" Type="Self.PhoneCalls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhoneCalls">
+              <PropertyRef Name="CallerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriberToTariff_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="SubscriberToTariff" Type="Self.SubscriberToTariff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriberToTariff">
+              <PropertyRef Name="SubscriberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriberToTariff_Tariffs">
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="1" />
+          <End Role="SubscriberToTariff" Type="Self.SubscriberToTariff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariffs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriberToTariff">
+              <PropertyRef Name="TariffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TariffCharges_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="TariffCharges" Type="Self.TariffCharges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TariffCharges">
+              <PropertyRef Name="SubscriberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TariffCharges_Tariffs">
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="1" />
+          <End Role="TariffCharges" Type="Self.TariffCharges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariffs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TariffCharges">
+              <PropertyRef Name="TariffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PbxManagementModelStoreContainer">
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhoneCalls" EntityType="Self.PhoneCalls" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subscribers" EntityType="Self.Subscribers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriberToTariff" EntityType="Self.SubscriberToTariff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TariffCharges" EntityType="Self.TariffCharges" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tariffs" EntityType="Self.Tariffs" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Messages_Subscribers" Association="Self.FK_Messages_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Subscribers" Association="Self.FK_Payments_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhoneCalls_Subscribers" Association="Self.FK_PhoneCalls_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="PhoneCalls" EntitySet="PhoneCalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriberToTariff_Subscribers" Association="Self.FK_SubscriberToTariff_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="SubscriberToTariff" EntitySet="SubscriberToTariff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriberToTariff_Tariffs" Association="Self.FK_SubscriberToTariff_Tariffs">
+            <End Role="Tariffs" EntitySet="Tariffs" />
+            <End Role="SubscriberToTariff" EntitySet="SubscriberToTariff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TariffCharges_Subscribers" Association="Self.FK_TariffCharges_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="TariffCharges" EntitySet="TariffCharges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TariffCharges_Tariffs" Association="Self.FK_TariffCharges_Tariffs">
+            <End Role="Tariffs" EntitySet="Tariffs" />
+            <End Role="TariffCharges" EntitySet="TariffCharges" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PbxManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderId" Type="Int32" Nullable="false" />
+          <Property Name="ReceiverPhoneNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Text" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Subscribers" Relationship="Self.FK_Messages_Subscribers" FromRole="Messages" ToRole="Subscribers" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriberId" Type="Int32" Nullable="false" />
+          <Property Name="AccountNumber" Type="String" MaxLength="16" FixedLength="true" Unicode="true" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sum" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Subscribers" Relationship="Self.FK_Payments_Subscribers" FromRole="Payments" ToRole="Subscribers" />
+        </EntityType>
+        <EntityType Name="PhoneCalls">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CallerId" Type="Int32" Nullable="false" />
+          <Property Name="ReceiverPhoneNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="End" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Subscribers" Relationship="Self.FK_PhoneCalls_Subscribers" FromRole="PhoneCalls" ToRole="Subscribers" />
+        </EntityType>
+        <EntityType Name="Subscribers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Balance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Messages_Subscribers" FromRole="Subscribers" ToRole="Messages" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_Subscribers" FromRole="Subscribers" ToRole="Payments" />
+          <NavigationProperty Name="PhoneCalls" Relationship="Self.FK_PhoneCalls_Subscribers" FromRole="Subscribers" ToRole="PhoneCalls" />
+          <NavigationProperty Name="SubscriberToTariff" Relationship="Self.FK_SubscriberToTariff_Subscribers" FromRole="Subscribers" ToRole="SubscriberToTariff" />
+          <NavigationProperty Name="TariffCharges" Relationship="Self.FK_TariffCharges_Subscribers" FromRole="Subscribers" ToRole="TariffCharges" />
+        </EntityType>
+        <EntityType Name="SubscriberToTariff">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriberId" Type="Int32" Nullable="false" />
+          <Property Name="TariffId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Subscribers" Relationship="Self.FK_SubscriberToTariff_Subscribers" FromRole="SubscriberToTariff" ToRole="Subscribers" />
+          <NavigationProperty Name="Tariffs" Relationship="Self.FK_SubscriberToTariff_Tariffs" FromRole="SubscriberToTariff" ToRole="Tariffs" />
+        </EntityType>
+        <EntityType Name="TariffCharges">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriberId" Type="Int32" Nullable="false" />
+          <Property Name="TariffId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sum" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Subscribers" Relationship="Self.FK_TariffCharges_Subscribers" FromRole="TariffCharges" ToRole="Subscribers" />
+          <NavigationProperty Name="Tariffs" Relationship="Self.FK_TariffCharges_Tariffs" FromRole="TariffCharges" ToRole="Tariffs" />
+        </EntityType>
+        <EntityType Name="Tariffs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Period" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SubscriberToTariff" Relationship="Self.FK_SubscriberToTariff_Tariffs" FromRole="Tariffs" ToRole="SubscriberToTariff" />
+          <NavigationProperty Name="TariffCharges" Relationship="Self.FK_TariffCharges_Tariffs" FromRole="Tariffs" ToRole="TariffCharges" />
+        </EntityType>
+        <Association Name="FK_Messages_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="SubscriberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhoneCalls_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="PhoneCalls" Type="Self.PhoneCalls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhoneCalls">
+              <PropertyRef Name="CallerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriberToTariff_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="SubscriberToTariff" Type="Self.SubscriberToTariff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriberToTariff">
+              <PropertyRef Name="SubscriberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TariffCharges_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="TariffCharges" Type="Self.TariffCharges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TariffCharges">
+              <PropertyRef Name="SubscriberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriberToTariff_Tariffs">
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="1" />
+          <End Role="SubscriberToTariff" Type="Self.SubscriberToTariff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariffs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriberToTariff">
+              <PropertyRef Name="TariffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TariffCharges_Tariffs">
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="1" />
+          <End Role="TariffCharges" Type="Self.TariffCharges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariffs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TariffCharges">
+              <PropertyRef Name="TariffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PbxEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Messages" EntityType="Self.Messages" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" />
+          <EntitySet Name="PhoneCalls" EntityType="Self.PhoneCalls" />
+          <EntitySet Name="Subscribers" EntityType="Self.Subscribers" />
+          <EntitySet Name="SubscriberToTariff" EntityType="Self.SubscriberToTariff" />
+          <EntitySet Name="TariffCharges" EntityType="Self.TariffCharges" />
+          <EntitySet Name="Tariffs" EntityType="Self.Tariffs" />
+          <AssociationSet Name="FK_Messages_Subscribers" Association="Self.FK_Messages_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Subscribers" Association="Self.FK_Payments_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhoneCalls_Subscribers" Association="Self.FK_PhoneCalls_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="PhoneCalls" EntitySet="PhoneCalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriberToTariff_Subscribers" Association="Self.FK_SubscriberToTariff_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="SubscriberToTariff" EntitySet="SubscriberToTariff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TariffCharges_Subscribers" Association="Self.FK_TariffCharges_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="TariffCharges" EntitySet="TariffCharges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriberToTariff_Tariffs" Association="Self.FK_SubscriberToTariff_Tariffs">
+            <End Role="Tariffs" EntitySet="Tariffs" />
+            <End Role="SubscriberToTariff" EntitySet="SubscriberToTariff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TariffCharges_Tariffs" Association="Self.FK_TariffCharges_Tariffs">
+            <End Role="Tariffs" EntitySet="Tariffs" />
+            <End Role="TariffCharges" EntitySet="TariffCharges" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PbxManagementModelStoreContainer" CdmEntityContainer="PbxEntities">
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="PbxManagementModel.Messages">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="ReceiverPhoneNumber" ColumnName="ReceiverPhoneNumber" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="PbxManagementModel.Payments">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubscriberId" ColumnName="SubscriberId" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhoneCalls">
+            <EntityTypeMapping TypeName="PbxManagementModel.PhoneCalls">
+              <MappingFragment StoreEntitySet="PhoneCalls">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CallerId" ColumnName="CallerId" />
+                <ScalarProperty Name="ReceiverPhoneNumber" ColumnName="ReceiverPhoneNumber" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="End" ColumnName="End" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subscribers">
+            <EntityTypeMapping TypeName="PbxManagementModel.Subscribers">
+              <MappingFragment StoreEntitySet="Subscribers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriberToTariff">
+            <EntityTypeMapping TypeName="PbxManagementModel.SubscriberToTariff">
+              <MappingFragment StoreEntitySet="SubscriberToTariff">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubscriberId" ColumnName="SubscriberId" />
+                <ScalarProperty Name="TariffId" ColumnName="TariffId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TariffCharges">
+            <EntityTypeMapping TypeName="PbxManagementModel.TariffCharges">
+              <MappingFragment StoreEntitySet="TariffCharges">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubscriberId" ColumnName="SubscriberId" />
+                <ScalarProperty Name="TariffId" ColumnName="TariffId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tariffs">
+            <EntityTypeMapping TypeName="PbxManagementModel.Tariffs">
+              <MappingFragment StoreEntitySet="Tariffs">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

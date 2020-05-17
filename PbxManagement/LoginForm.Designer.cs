@@ -56,6 +56,7 @@
             this.tbUsername.TabIndex = 1;
             this.tbUsername.Text = "Username";
             this.tbUsername.Click += new System.EventHandler(this.tbUsername_Click);
+            this.tbUsername.Enter += new System.EventHandler(this.tbUsername_Click);
             // 
             // panelUsername
             // 
@@ -86,6 +87,7 @@
             this.tbPassword.Text = "Password";
             this.tbPassword.Click += new System.EventHandler(this.tbPassword_Click);
             this.tbPassword.TextChanged += new System.EventHandler(this.tbPassword_TextChanged);
+            this.tbPassword.Enter += new System.EventHandler(this.tbPassword_Click);
             // 
             // btnSignIn
             // 
@@ -93,12 +95,13 @@
             this.btnSignIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSignIn.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnSignIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(36)))), ((int)(((byte)(49)))));
-            this.btnSignIn.Location = new System.Drawing.Point(120, 372);
+            this.btnSignIn.Location = new System.Drawing.Point(121, 369);
             this.btnSignIn.Name = "btnSignIn";
             this.btnSignIn.Size = new System.Drawing.Size(177, 51);
             this.btnSignIn.TabIndex = 7;
             this.btnSignIn.Text = "Sign In";
             this.btnSignIn.UseVisualStyleBackColor = false;
+            this.btnSignIn.Click += new System.EventHandler(this.btnSignIn_Click);
             // 
             // btnShowPassword
             // 

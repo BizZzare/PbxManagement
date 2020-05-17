@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{28F3F956-BA8B-4435-9ADA-A5418746B7F5}</ProjectGuid>
+    <ProjectGuid>{C5A57435-A5EB-41FC-A4F1-3C54A4AE07AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PbxManagement.BLL</RootNamespace>
@@ -41,13 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PbxManagement.DAL\PbxManagement.DAL.csproj">
-      <Project>{dcd6f927-79c8-4df8-8ecd-e7dd1654093d}</Project>
-      <Name>PbxManagement.DAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

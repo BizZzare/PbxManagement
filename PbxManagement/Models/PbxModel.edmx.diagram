@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="279357ad6b3f4654ab6091bd536c4d62" Name="Diagram1">
+        <EntityTypeShape EntityType="PbxManagementModel.Messages" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PbxManagementModel.Payments" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PbxManagementModel.PhoneCalls" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PbxManagementModel.Subscribers" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PbxManagementModel.SubscriberToTariff" Width="1.5" PointX="6" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PbxManagementModel.TariffCharges" Width="1.5" PointX="6" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PbxManagementModel.Tariffs" Width="1.5" PointX="3.75" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="PbxManagementModel.FK_Messages_Subscribers" ManuallyRouted="false" />
+        <AssociationConnector Association="PbxManagementModel.FK_Payments_Subscribers" ManuallyRouted="false" />
+        <AssociationConnector Association="PbxManagementModel.FK_PhoneCalls_Subscribers" ManuallyRouted="false" />
+        <AssociationConnector Association="PbxManagementModel.FK_SubscriberToTariff_Subscribers" ManuallyRouted="false" />
+        <AssociationConnector Association="PbxManagementModel.FK_TariffCharges_Subscribers" ManuallyRouted="false" />
+        <AssociationConnector Association="PbxManagementModel.FK_SubscriberToTariff_Tariffs" ManuallyRouted="false" />
+        <AssociationConnector Association="PbxManagementModel.FK_TariffCharges_Tariffs" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

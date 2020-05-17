@@ -1,12 +1,7 @@
-﻿using PbxManagement.Properties;
+﻿using PbxManagement.Helpers;
+using PbxManagement.Properties;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PbxManagement
@@ -93,6 +88,22 @@ namespace PbxManagement
         private void tbPassword_TextChanged(object sender, EventArgs e)
         {
             tbPasswordNormal.Text = tbPassword.Text;
+        }
+
+        private void btnSignIn_Click(object sender, EventArgs e)
+        {
+            var response = AccountHelper.TrySignIn(tbUsername.Text, tbPassword.Text);
+            if (response.isSuccess)
+            {
+                this.Hide();
+                var managementForm = new ManagementForm();
+                managementForm.Closed += (s, args) => this.Close();
+                managementForm.Show();
+            }
+            else
+            {
+                MessageBox.Show(response.Message);
+            }
         }
     }
 }
