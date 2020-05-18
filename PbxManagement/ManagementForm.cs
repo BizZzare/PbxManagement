@@ -23,6 +23,7 @@ namespace PbxManagement
         private void ManagementForm_Load(object sender, EventArgs e)
         {
             LoadSubscribers();
+            LoadUsers();
         }
 
         private void btnAddSubscriber_Click(object sender, EventArgs e)
@@ -44,6 +45,13 @@ namespace PbxManagement
             var subscribers = string.IsNullOrEmpty(query) ? SubscriberHelper.GetSubscribers() : SubscriberHelper.SearchSubscribers(query);
             lbSubscribers.Items.Clear();
             lbSubscribers.Items.AddRange(subscribers.Select(x => x.ToString()).ToArray());
+        }
+
+        private void LoadUsers(string query = null)
+        {
+            var users = string.IsNullOrEmpty(query) ? AccountHelper.GetUsers() : AccountHelper.SearchUsers(query);
+            lbUsers.Items.Clear();
+            lbUsers.Items.AddRange(users.Select(x => x.ToString()).ToArray());
         }
 
         private void lbSubscribers_SelectedValueChanged(object sender, EventArgs e)
@@ -73,7 +81,19 @@ namespace PbxManagement
             var form = new SubscriberUpdate(sub);
             form.FormClosed += delegate { LoadSubscribers(); };
             form.ShowDialog();
-           
+        }
+
+        private void btnSubscriberDelete_Click(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Are you sure you want to delete this subscriber?", 
+                "Deleting", 
+                MessageBoxButtons.YesNoCancel, 
+                MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                var sub = SubscriberHelper.GetSubscribers().Where(x => x.ToString().Equals(lbSubscribers.SelectedItem)).FirstOrDefault();
+                SubscriberHelper.DeleteSubscriber(sub.Id);
+                LoadSubscribers();
+            }
         }
     }
 }

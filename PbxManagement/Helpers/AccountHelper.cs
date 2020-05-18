@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
+using System.Linq;
 using PbxManagement.Models;
 
 namespace PbxManagement.Helpers
@@ -39,6 +42,25 @@ namespace PbxManagement.Helpers
             }
 
             return response;
+        }
+
+        public static IEnumerable<app_Users> GetUsers()
+        {
+            using (var context = new AccountEntities())
+            {
+                return context.app_Users.ToList();
+            }
+        }
+
+        public static IEnumerable<app_Users> SearchUsers(string query)
+        {
+            var users = GetUsers();
+            var res = users.Where(x => x.FirstName.ToUpper().Contains(query.ToUpper())
+                    || x.LastName.ToUpper().Contains(query.ToUpper())
+                    || x.Username.ToUpper().Contains(query.ToUpper())
+                    || x.Email.ToUpper().Contains(query.ToUpper())
+                    ).ToList();
+            return res;
         }
     }
 }

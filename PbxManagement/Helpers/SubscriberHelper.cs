@@ -59,6 +59,19 @@ namespace PbxManagement.Helpers
             }
         }
 
+        public static void DeleteSubscriber(int id)
+        {
+            using (var context = new PbxEntities())
+            {
+                var subToRemove = context.Subscribers.SingleOrDefault(x => x.Id == id);
+                if(subToRemove != null)
+                {
+                    context.Subscribers.Remove(subToRemove);
+                    context.SaveChanges();
+                }
+            }
+        }
+
         private static bool CheckIfUnique(string phoneNumber)
         {
             using (var context = new PbxEntities())
